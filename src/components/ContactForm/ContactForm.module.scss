@@ -1,0 +1,29 @@
+.contactForm {
+  padding: 20px;
+  background-image: repeating-radial-gradient(#a2ac, #2a2c, #abcd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contactInput {
+  margin: 20px 0;
+  height: 30px;
+}
+.addContactBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-style: none;
+  color: rgb(231, 231, 231);
+  background-image: radial-gradient(rgb(255, 0, 242), #442688);
+}
+.contactLabel {
+  font-size: 18px;
+}
+.addContactBtn:hover {
+  background-image: radial-gradient(#442688, rgb(255, 0, 242));
+  color: rgb(22, 19, 19);
+  transform: scale(1.1);
+  transition: transform cubic-bezier(0.075, 0.82, 0.165, 1);
+}
