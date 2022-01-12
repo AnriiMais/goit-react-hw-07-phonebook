@@ -1,33 +1,57 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import { add, deleteContact, filter } from './contacts-actions';
-import data from '../../data.json';
+import {
+  filter,
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactsRequest,
+  addContactsSuccess,
+  addContactsError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+} from './contacts-actions';
 
-const addReducerFunc = (state, { payload }) => {
-  const { name, number } = payload;
-  if (
-    state.every(
-      contact =>
-        contact.name.toLowerCase() !== name.toLowerCase() &&
-        number !== contact.number,
-    )
-  ) {
-    return [...state, payload];
-  } else alert(`${name} contact with the ${number} already exists!!!`);
-  return state;
-};
-const itemsReducer = createReducer([...data], {
-  [add.type]: addReducerFunc,
-  [deleteContact.type]: (state, { payload }) =>
-    state.filter(contact => contact.id !== payload),
+const itemsReducer = createReducer([], {
+  [fetchContactsSuccess.type]: (state, { payload }) => [...state, ...payload],
+  [addContactsSuccess.type]: (state, { payload }) => [...state, payload],
+  [deleteContactSuccess.type]: (state, { payload }) =>
+    state.filter(contact => contact.id !== payload.id),
 });
 
 const filterReducer = createReducer('', {
   [filter.type]: (_, { payload }) => payload,
 });
 
+const loading = createReducer(false, {
+  [fetchContactsRequest.type]: () => true,
+  [fetchContactsSuccess.type]: () => false,
+  [fetchContactsError.type]: () => false,
+
+  [addContactsRequest.type]: () => true,
+  [addContactsSuccess.type]: () => false,
+  [addContactsError.type]: () => false,
+
+  [deleteContactRequest.type]: () => true,
+  [deleteContactSuccess.type]: () => false,
+  [deleteContactError.type]: () => false,
+});
+
+const error = createReducer(null, {
+  [fetchContactsRequest.type]: () => null,
+  [fetchContactsError.type]: (_, { payload }) => payload,
+
+  [addContactsRequest.type]: () => null,
+  [addContactsError.type]: (_, { payload }) => payload,
+
+  [deleteContactRequest.type]: () => null,
+  [deleteContactError.type]: (_, { payload }) => payload,
+});
 const contactsReducer = combineReducers({
   items: itemsReducer,
   filter: filterReducer,
+  loading,
+  error,
 });
 export default contactsReducer;

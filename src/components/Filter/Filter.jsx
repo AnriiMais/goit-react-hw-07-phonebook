@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import shortId from 'shortid';
 import s from './Filter.module.scss';
 import { filter } from '../../redux/contacts/contacts-actions';
+import { getFilterValue } from '../../redux/contacts/contacts-selectors';
 
 const Filter = ({ value, filterQuery }) => {
   const genIdSearch = shortId.generate();
@@ -26,7 +27,7 @@ Filter.propTypes = {
   filterQuery: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
-  value: state.contacts.filter,
+  value: getFilterValue(state),
 });
 
 const mapDispatchToProps = dispatch => ({

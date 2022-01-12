@@ -1,5 +1,4 @@
 import './App.scss';
-// import axios from 'axios';
 import ContactForm from '../ContactForm';
 import Filter from '../Filter';
 import ContactList from '../ContactList';
@@ -15,7 +14,5 @@ const App = () => {
     </section>
   );
 };
-
-// console.log('axios :>> ', axios.defaults.baseURL);
 
 export default App;
